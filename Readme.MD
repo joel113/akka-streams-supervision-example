@@ -20,11 +20,11 @@ from json.
 
 ### Http Post: Create a Vehicle
 
-`curl -H "Content-Type: application/json" -X POST -d '{"vehicle":{"vin":"UIFJ39394","mileage":42}}' http://localhost:8080/add-vehicle`
+`curl -H "Content-Type: application/json" -X POST -d '{"vin":"UIFJ39394","mileage":42}' http://localhost:8080/add-vehicle`
 
-`curl -H "Content-Type: application/json" -X POST -d '{"vehicle":{"vin":"UIFJ39394","mileage":53}}' http://localhost:8080/update-vehicle`
+`curl -H "Content-Type: application/json" -X POST -d '{"vin":"UIFJ39394","mileage":53}' http://localhost:8080/update-vehicle`
 
-`curl http://localhost:8080/get-vehicle?vin=UIFJ39394`
+`curl http://localhost:8080/get-vehicle\?vin=UIFJ39394`
 
 ## Spray Json
 

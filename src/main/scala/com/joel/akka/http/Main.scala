@@ -6,7 +6,7 @@ import akka.http.scaladsl.Http
 import scala.concurrent.ExecutionContextExecutor
 import scala.util.{Failure, Success}
 
-class Main extends App {
+object Main extends App {
 
   implicit val system : ActorSystem = ActorSystem("actor-system")
   implicit val executionContext: ExecutionContextExecutor = system.dispatcher

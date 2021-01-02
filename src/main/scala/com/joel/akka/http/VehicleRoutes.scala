@@ -45,7 +45,7 @@ class VehicleRoutes(vehicleOps: VehicleOperations) extends Directives with Spray
     },
     get {
       path("get-vehicle") {
-        parameter("vin") {
+        parameter("vin".as[String]) {
           vin => {
             onComplete(vehicleOps.getVehicle(vin)) {
               case Success(vehicle) => complete(vehicle)
@@ -55,6 +55,9 @@ class VehicleRoutes(vehicleOps: VehicleOperations) extends Directives with Spray
           }
         }
       }
+    },
+    get {
+      complete("Akka HTTP example.")
     }
   )
 
