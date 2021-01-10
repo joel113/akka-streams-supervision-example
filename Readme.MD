@@ -1,41 +1,104 @@
-# Akka HTTP Example
+# Akka Supervision Example
 
-This project is an Akka HTTP example implementation based on the following blog posts.
+This example project is about supervising actor in Akka. Supervision means to oversee actors for failure handling.
+Supervising actors oversee actors in an hierarchy of actors. There are different possible actions: resume, restart,
+start or escalate.
 
-https://blog.knoldus.com/introduction-to-akka-http-2/
+Please, be aware that there are two Akka Actor implementations:
 
-Please also read the latest Akka HTTP documentation:
+- classic
+- typed
 
-https://doc.akka.io/docs/akka-http/current/introduction.html
+You can find more information about Akka Actor Classic using the following link:
 
-The example implements three routes including
+https://doc.akka.io/docs/akka/current/actors.html
 
-- a single get route and
-- multiple post routes.
+Whereas, using the following link leads to more information about the new Akka Actor Typed implementation:
 
-The example uses Spray Json and the Akka HTTP Json Support for marshalling and unmarshalling the domain objects to and
-from json.
+https://doc.akka.io/docs/akka/current/typed/actors.html
 
-## Curl Requests
+This example project uses the new Akka Actor Typed implementation. Please check the following subsection for more
+information about the actor supervision with Akka Actor Classic.
 
-### Http Post: Create a Vehicle
+## Akka Actor Typed
 
-`curl -H "Content-Type: application/json" -X POST -d '{"vin":"UIFJ39394","mileage":42}' http://localhost:8080/add-vehicle`
+Akka Actor Type is the latest Akka implementation of the actor model. An actor is defined based on the behavior which is
+defined on top of the protocol.
 
-`curl -H "Content-Type: application/json" -X POST -d '{"vin":"UIFJ39394","mileage":53}' http://localhost:8080/update-vehicle`
+https://doc.akka.io/docs/akka/current/typed/actors.html
 
-`curl http://localhost:8080/get-vehicle\?vin=UIFJ39394`
+The Actor implementation is called "typed" as the behavior implementation is defined on top of the type variable t which
+defines the protocol:
 
-## Spray Json
+`Behavior[-T]`
 
-Spray Json is a Scala JSON implementation. Please check the following GitHub project for more inofmration about Spray
-Json.
+If the behavior of the Device Actor is defined using
 
-https://github.com/spray/spray-json
+`Behavior[DeviceRequest]`
 
-## Akka HTTP Json Support
+the behavior is defined on top of the DeviceRequest protocol.
 
-Akka HTTP has a built-in support for JSON to make the use of Spray Json very convenient. Please check the following page
-form more information about the Akka HTTP built-in support for JSON.
+Please check the following introductions into Akka Actor Typed:
 
-https://doc.akka.io/docs/akka-http/current/common/json-support.html
+https://www.baeldung.com/scala/typed-akka
+
+https://alvinalexander.com/scala/how-to-start-akka-actors-in-scala/
+
+Please check the following classes of the Akka Actor Typed Scala DSL implementation:
+
+https://doc.akka.io/api/akka/current/akka/actor/typed/scaladsl/AbstractBehavior.html
+
+https://doc.akka.io/api/akka/current/akka/actor/typed/scaladsl/ActorContext.html
+
+https://doc.akka.io/docs/akka/current/typed/from-classic.html
+
+## Akka Actor Classic Supervision
+
+https://doc.akka.io/docs/akka/current/general/supervision.html
+
+https://doc.akka.io/docs/akka/current/typed/guide/tutorial_2.html
+
+https://doc.akka.io/docs/akka/current/typed/guide/tutorial_3.html
+
+https://doc.akka.io/docs/akka/current/typed/guide/modules.html
+
+https://medium.com/akka-for-newbies/actor-supervision-dbbb96734176
+
+https://blog.knoldus.com/supervising-actors-in-akka/
+
+## Akka Actor Typed Supervision
+
+The following fault tolerance subsection of the Akka Actor Typed documentation introduces the concept of actor
+supervision with the Akka Actor Typed API:
+
+https://doc.akka.io/docs/akka/current/typed/fault-tolerance.html#supervision
+
+To use actor supervision, the typed behavior is wrapped with the supervision behavior. The following line of code wrapps
+the behavior with a supervision behavior if an IllegalStateException occurs:
+
+`Behaviors.supervise(behavior).onFailure[IllegalStateException](SupervisorStrategy.restart)`
+
+The documentation introduces more advanced means when it comes to define supervision behavior:
+
+`Behaviors
+.supervise(behavior)
+.onFailure[IllegalStateException](
+SupervisorStrategy.restart.withLimit(maxNrOfRetries = 10, withinTimeRange = 10.seconds))`
+
+Furthermore, it is possible to nest supervision behavior within supervision behavior:
+
+`Behaviors
+.supervise(Behaviors.supervise(behavior).onFailure[IllegalStateException](SupervisorStrategy.restart))
+.onFailure[IllegalArgumentException](SupervisorStrategy.stop)`
+
+The full source code of the examples of the documentation can be found here:
+
+https://github.com/akka/akka/blob/v2.6.10/akka-actor-typed-tests/src/test/scala/docs/akka/typed/supervision/SupervisionCompileOnly.scala#L36-L38
+
+A full list of strategies can be found here:
+
+https://doc.akka.io/api/akka/2.6/akka/actor/typed/SupervisorStrategy.html
+
+## Akka Actor Typed Testing
+
+https://doc.akka.io/docs/akka/current/typed/testing.html

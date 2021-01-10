@@ -4,30 +4,27 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.example</groupId>
-    <artifactId>akka-http-example</artifactId>
+    <groupId>com.joel</groupId>
+    <artifactId>akka-supervision-example</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <dependencies>
         <dependency>
             <groupId>com.typesafe.akka</groupId>
-            <artifactId>akka-http_2.13</artifactId>
-            <version>10.2.2</version>
+            <artifactId>akka-actor-typed_2.13</artifactId>
+            <version>2.5.23</version>
         </dependency>
         <dependency>
             <groupId>com.typesafe.akka</groupId>
-            <artifactId>akka-stream_2.13</artifactId>
-            <version>2.6.10</version>
+            <artifactId>akka-actor-testkit-typed_2.13</artifactId>
+            <version>2.5.23</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.typesafe.akka</groupId>
-            <artifactId>akka-http-spray-json_2.13</artifactId>
-            <version>10.2.2</version>
-        </dependency>
-        <dependency>
-            <groupId>io.spray</groupId>
-            <artifactId>spray-json_2.12</artifactId>
-            <version>1.3.6</version>
+            <groupId>org.scalatest</groupId>
+            <artifactId>scalatest_2.13</artifactId>
+            <version>3.2.3</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
